@@ -1,26 +1,28 @@
-🛡 Python Security Recorder
+🛡 Security Snapshot System (Python)
 
-A lightweight background security system that records webcam + screen continuously and always keeps the last 15 minutes of footage, even if the system shuts down unexpectedly.
+A lightweight background security tool that captures webcam + screen snapshots at regular intervals and always keeps the last 15 minutes of images, even if the computer shuts down unexpectedly.
+
+Unlike video recording, this system saves individual images, making it much more reliable during sudden power loss.
 
 🎯 Features
 
-🎥 Records webcam video
+📸 Captures webcam images
 
-🖥 Records full screen activity
+🖥 Captures full screen images
 
-🕒 Captures at 15 FPS
+🧩 Combines camera + screen side-by-side
 
-💾 Saves recordings in 1-minute chunks
+⏱ Takes snapshots every 1 second (configurable)
 
-♻ Automatically deletes old clips (keeps last 15 minutes only)
+🕒 Keeps only the last 15 minutes of images
 
-🧠 Works as a rolling buffer system
+♻ Automatically deletes old snapshots
 
-🕵 Runs silently in the background
+🕵 Can run silently in the background
 
-🚀 Starts automatically when Windows boots
+🚀 Can start automatically with Windows
 
-🗓 Timestamp overlay on all recordings
+🗓 Timestamp printed on every image
 
 📦 Requirements
 
@@ -28,46 +30,52 @@ Install Python 3.9+ and run:
 
 pip install opencv-python mss numpy pyinstaller
 
-▶ How to Run Manually
-python security_recorder.py
+▶ Run Manually
+python security_snapshot.py
 
 
-Recordings will be saved inside the recordings/ folder.
+Snapshots will be saved in the snapshots/ folder.
 
 📁 Output Structure
 project_folder/
 │
-├── security_recorder.py
-├── recordings/
-│   ├── 2026-01-29_21-10-00.avi
-│   ├── 2026-01-29_21-11-00.avi
-│   └── (only last 15 files kept)
+├── security_snapshot.py
+├── snapshots/
+│   ├── 2026-01-29_21-10-01.jpg
+│   ├── 2026-01-29_21-10-02.jpg
+│   └── (only last 15 minutes kept)
 
 
-Each file = 1 minute of recording.
+Each image contains:
+
+Webcam view
+
+Screen capture
+
+Timestamp
 
 ⚙ How It Works
 
-The app:
+Captures webcam frame
 
-Records camera + screen side-by-side
+Captures current screen
 
-Saves video into 1-minute files
+Merges both into one image
 
-Keeps only the most recent 15 files
+Saves as JPG with timestamp
 
-Deletes older files automatically
+Deletes images older than 15 minutes
 
-So at any moment, you always have the last 15 minutes of activity saved.
+Because each image is saved instantly, no data is lost if the system shuts down suddenly.
 
 🕵 Run Silently in Background
 Build Hidden EXE
-pyinstaller --noconsole --onefile security_recorder.py
+pyinstaller --noconsole --onefile security_snapshot.py
 
 
-The EXE will be created inside:
+The executable will be created in:
 
-dist/security_recorder.exe
+dist/security_snapshot.exe
 
 
 This version runs with no terminal window.
@@ -79,7 +87,7 @@ Press Win + R
 
 Type: shell:startup
 
-Copy security_recorder.exe into that folder
+Copy security_snapshot.exe into that folder
 
 Method 2 — Task Scheduler (Recommended)
 
@@ -87,7 +95,7 @@ Open Task Scheduler
 
 Click Create Task
 
-Name it: System Security Service
+Name it: System Snapshot Service
 
 Trigger: At log on
 
@@ -99,36 +107,39 @@ Enable:
 
 ✔ Run with highest privileges
 
-🔒 Privacy & Storage Notes
-
-Videos are stored locally on your computer
-
-Make sure you have enough disk space
-
-You can change resolution or FPS in the script settings
-
 🛠 Configurable Settings (Inside Script)
-FPS = 15
-CHUNK_DURATION = 60        # seconds per file
-MAX_MINUTES_TO_KEEP = 15
+INTERVAL = 1          # seconds between snapshots
+KEEP_MINUTES = 15     # how long to keep images
+
 CAM_WIDTH = 640
 CAM_HEIGHT = 480
+
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 
-🚧 Future Improvements (Optional)
+💾 Storage Note
 
-Motion detection recording
+If capturing every second:
 
-Cloud backup (Google Drive / Dropbox)
+~60 images per minute
 
-Email or Telegram alerts
+~900 images for 15 minutes
 
-Password-protected video viewer
+Make sure you have enough disk space.
+
+🚧 Possible Future Upgrades
+
+Motion-based snapshots only when movement is detected
+
+Automatic cloud backup
+
+Send alerts with snapshot to phone/email
+
+Blur screen area for privacy
 
 Multiple camera support
 
 ⚠ Disclaimer
 
 This project is for educational and personal security use only.
-Make sure you comply with local laws before recording people or screens.
+Recording people or screens without permission may be illegal in some areas. Always follow local laws and privacy regulations.
